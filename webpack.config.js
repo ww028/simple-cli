@@ -2,16 +2,20 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 // CleanWebpackPlugin 中文文档未更新
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const webpack = require('webpack');
 
 module.exports = {
   entry: {
-    app: "./src/index.js"
+    app: './src/index.js'
   },
   devtool: "inline-source-map",
   devServer: {
-    contentBase: "./dist"
+    contentBase: "./dist",
+    hot: true
   },
   plugins: [
+    new webpack.NamedModulesPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: "./index.html"
