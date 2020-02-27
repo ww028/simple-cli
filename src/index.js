@@ -1,3 +1,5 @@
+import './css/index.css'
+
 console.log("index");
 if (module.hot) {
   module.hot.accept("./print.js", function() {
