@@ -1,4 +1,4 @@
-import './css/index.css'
+import './style/index.scss'
 
 console.log("index");
 if (module.hot) {
