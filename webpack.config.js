@@ -5,17 +5,24 @@ const {
   CleanWebpackPlugin
 } = require("clean-webpack-plugin");
 const webpack = require('webpack');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
+  mode: 'production',
   entry: {
     app: './src/index.js'
   },
   devtool: "inline-source-map",
   devServer: {
     contentBase: "./dist",
-    hot: true
+    hot: true,
+    overlay:true
   },
   plugins: [
+    new MiniCssExtractPlugin({
+      filename: "css/[name]-[hash].css",//所有抽离出的样式文件，放进dist下的css目录
+      chunkFilename: "css/[name]-[hash].css"
+  }),
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new CleanWebpackPlugin(),
@@ -31,20 +38,23 @@ module.exports = {
   module: {
     rules: [{
         test: /\.css$/,
-        use: ["style-loader", "css-loader"]
+        use: [process.env.NODE_ENV=== 'production'? MiniCssExtractPlugin.loader:'style-loader',  'css-loader'],
+        // use: ["style-loader", "css-loader"]
       },
       {
         test: /\.scss$/,
-        use: [{
-            loader: "style-loader"
-          },
-          {
-            loader: "css-loader"
-          },
-          {
-            loader: "sass-loader"
-          }
-        ]
+        use: [process.env.NODE_ENV=== 'production'? MiniCssExtractPlugin.loader:'style-loader',  'css-loader',  'sass-loader']
+        // use: ['style-loader', 'css-loader', 'sass-loader'], 
+        // use: [{
+        //     loader: "style-loader"
+        //   },
+        //   {
+        //     loader: "css-loader"
+        //   },
+        //   {
+        //     loader: "sass-loader"
+        //   }
+        // ]
       },
       {
         test: /\.(png|svg|jpg|gif)$/,

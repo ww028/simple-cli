@@ -5,6 +5,7 @@ $(function(){
   console.log('jq')
 })
 
+console.log(process.env.NODE_ENV)
 console.log("index");
 if (module.hot) {
   module.hot.accept("./print.js", function() {
