@@ -59,7 +59,14 @@ module.exports = {
       {
         test: /\.(htm|html)$/i,
         loader: 'html-withimg-loader'
-      }
+      },
+      {
+        test: require.resolve('jquery'),
+        use: [{
+          loader: 'expose-loader',
+          options: '$'
+        }]
+      },
     ]
   }
 };
