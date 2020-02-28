@@ -16,7 +16,7 @@ module.exports = {
   devServer: {
     contentBase: "./dist",
     hot: true,
-    overlay:true
+    overlay: true
   },
   plugins: [
     new MiniCssExtractPlugin({
@@ -38,37 +38,27 @@ module.exports = {
     path: path.resolve(__dirname, "dist")
   },
   module: {
-    rules: [
-      // {
-      //   test: /\.css$/,
-      //   use: ["style-loader", "css-loader"]
-      // },
-      // 单独引入css文件
-      {
-        test: /\.css$/,
-        use: [
-          {
+    rules: [{
+        test: /\.(sa|sc|c)ss$/,
+        use: [{
             loader: MiniCssExtractPlugin.loader,
             options: {
-              // you can specify a publicPath here
               // by default it use publicPath in webpackOptions.output
               publicPath: '../',
             }
           },
-          "css-loader"
+          "css-loader",
+          'sass-loader',
         ]
-      },
-      {
-        test: /\.scss$/,
-        use: ['style-loader', 'css-loader', 'sass-loader'], 
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
         use: [{
-          loader: "file-loader",
+          loader: "url-loader",
           options: {
             outputPath: "images",
             esModule: false,
+            limit:50000,
           }
         }]
       },
