@@ -19,10 +19,6 @@ module.exports = {
     overlay:true
   },
   plugins: [
-    new MiniCssExtractPlugin({
-      filename: "css/[name]-[hash].css",//所有抽离出的样式文件，放进dist下的css目录
-      chunkFilename: "css/[name]-[hash].css"
-  }),
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new CleanWebpackPlugin(),
@@ -38,23 +34,11 @@ module.exports = {
   module: {
     rules: [{
         test: /\.css$/,
-        use: [process.env.NODE_ENV=== 'production'? MiniCssExtractPlugin.loader:'style-loader',  'css-loader'],
-        // use: ["style-loader", "css-loader"]
+        use: ["style-loader", "css-loader"]
       },
       {
         test: /\.scss$/,
-        use: [process.env.NODE_ENV=== 'production'? MiniCssExtractPlugin.loader:'style-loader',  'css-loader',  'sass-loader']
-        // use: ['style-loader', 'css-loader', 'sass-loader'], 
-        // use: [{
-        //     loader: "style-loader"
-        //   },
-        //   {
-        //     loader: "css-loader"
-        //   },
-        //   {
-        //     loader: "sass-loader"
-        //   }
-        // ]
+        use: ['style-loader', 'css-loader', 'sass-loader'], 
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
