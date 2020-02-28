@@ -1,4 +1,5 @@
 import './style/index.scss'
+import './css/index.css'
 
 import $ from 'jquery'
 $(function(){

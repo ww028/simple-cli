@@ -5,7 +5,7 @@ const {
   CleanWebpackPlugin
 } = require("clean-webpack-plugin");
 const webpack = require('webpack');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   mode: 'production',
@@ -19,6 +19,12 @@ module.exports = {
     overlay:true
   },
   plugins: [
+    new MiniCssExtractPlugin({
+      // Options similar to the same options in webpackOptions.output
+      // both options are optional
+      filename: "[name].css",
+      chunkFilename: "[id].css"
+    }),
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new CleanWebpackPlugin(),
@@ -32,9 +38,25 @@ module.exports = {
     path: path.resolve(__dirname, "dist")
   },
   module: {
-    rules: [{
+    rules: [
+      // {
+      //   test: /\.css$/,
+      //   use: ["style-loader", "css-loader"]
+      // },
+      // 单独引入css文件
+      {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"]
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              // you can specify a publicPath here
+              // by default it use publicPath in webpackOptions.output
+              publicPath: '../',
+            }
+          },
+          "css-loader"
+        ]
       },
       {
         test: /\.scss$/,
